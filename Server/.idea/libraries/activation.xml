@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="activation">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Desktop/Extracted Jars/activation.jar!/" />
+      <root url="jar://$USER_HOME$/Desktop/Extracted Jars/json-simple-1.1.jar!/" />
+      <root url="jar://$USER_HOME$/Desktop/Extracted Jars/mail.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
