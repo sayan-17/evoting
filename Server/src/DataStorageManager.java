@@ -1,24 +1,24 @@
-import netscape.javascript.JSObject;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import org.json.simple.JSONObject;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 public class DataStorageManager {
 	
 	private static final String driver = "com.mysql.jdbc.Driver";
 	private static final String location = "jdbc:mysql://localhost:3306/voting";
 	private static final String user = "root";
-	private static final String password = "sayan";
+	private static final String passkey = "sayan";
 	
 	private static final String ADMIN_TABLE = "ADMIN";
 	private static final String CAMPAIGN_TABLE = "CAMPAIGN";
 	private static final String FIELD_TABLE = "FIELDS";
 	
 	private static final String ALL_COLS = "*";
+	private static final String ADMIN_ID = "ADMIN_ID";
 	private static final String ADMIN_EMAIL = "EMAIL";
 	private static final String ADMIN_USERNAME = "USERNAME";
 	private static final String ADMIN_PASSWORD = "PASSWORD";
@@ -48,22 +48,37 @@ public class DataStorageManager {
 		return attribute + " " + operator + " \"" + value + "\"";
 	}
 	
+	private static String getUpdateCommand(String tableName, String attribute, String value){
+		return "UPDATE " + tableName + " SET " + attribute + "=\"" + value + "\"";
+	}
+	
+	private static String getUpdateCommand(String tableName, String attribute, String value, String conditions){
+		return "UPDATE " + tableName + " SET " + attribute + "=\"" + value + "\"" + " WHERE " + conditions;
+	}
+	
 	private static void executeStatement(String command) throws Exception {
 		Class.forName(driver);
-		Connection connection = DriverManager.getConnection(location, user, password);
+		Connection connection = DriverManager.getConnection(location, user, passkey);
 		Statement statement = connection.createStatement();
 		statement.execute(command);
 	}
 	
 	private static ResultSet executeQuery(String command) throws Exception{
 		Class.forName(driver);
-		Connection connection = DriverManager.getConnection(location, user, password);
+		Connection connection = DriverManager.getConnection(location, user, passkey);
 		Statement statement = connection.createStatement();
 		return statement.executeQuery(command);
 	}
 	
 	public static String storeData(AdminData adminData) throws Exception {
-		executeStatement(getInsertCommand(ADMIN_TABLE, adminData.toSQLString()));
+		try{
+			executeStatement(getInsertCommand(ADMIN_TABLE, adminData.toSQLString()));
+		}catch (MySQLIntegrityConstraintViolationException e){
+			if(e.toString().contains("Duplicate entry"))
+				return "already registered email";
+			else
+				throw new Exception("some error occurred");
+		}
 		return "stored";
 	}
 	
@@ -72,14 +87,32 @@ public class DataStorageManager {
 		ResultSet resultSet = executeQuery(getSelectCommand(ADMIN_TABLE, ALL_COLS, condition));
 		if(resultSet.wasNull())
 			return "account doesn't exist";
-		resultSet.next();
-		JSONObject object = new JSONObject();
-		object.put(ADMIN_USERNAME, resultSet.getString(ADMIN_USERNAME));
-		object.put(ADMIN_EMAIL, resultSet.getString(ADMIN_USERNAME));
-		if(password.equals(resultSet.getString(ADMIN_PASSWORD)))
-			object.put(ADMIN_PASSWORD, resultSet.getString(ADMIN_PASSWORD));
+		if(resultSet.next()) {
+			JSONObject object = new JSONObject();
+			object.put(ADMIN_USERNAME, resultSet.getString(ADMIN_USERNAME));
+			object.put(ADMIN_EMAIL, resultSet.getString(ADMIN_EMAIL));
+			if (password.equals(resultSet.getString(ADMIN_PASSWORD)))
+				return object.toJSONString();
+			else
+				return "incorrect password";
+		}else {
+			return "account doesn't exist";
+		}
+	}
+	
+	public static String getUsernameForEmail(String email) throws Exception {
+		String condition = makeAtomicCondition(ADMIN_EMAIL, EQUAL_OPERATOR, email);
+		ResultSet resultSet = executeQuery(getSelectCommand(ADMIN_TABLE, ALL_COLS, condition));
+		if(resultSet.wasNull())
+			return "account doesn't exist";
+		if(resultSet.next())
+			return resultSet.getString(ADMIN_USERNAME);
 		else
-			return "incorrect password";
-		return object.toJSONString();
+			return "account doesn't exist";
+	}
+	
+	public static void changePassword(String email, String newPassword) throws Exception {
+		String condition = makeAtomicCondition(ADMIN_EMAIL, EQUAL_OPERATOR, email);
+		executeStatement(getUpdateCommand(ADMIN_TABLE, ADMIN_PASSWORD, newPassword, condition));
 	}
 }

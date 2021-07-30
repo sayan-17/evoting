@@ -1,0 +1,36 @@
+*{
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    margin-top: 0;
+    background-color: white;
+    background-size: cover;
+}
+
+.sidebar {
+    background-color: black;
+    height: 100%;
+    width: 100%;
+    margin-left: 0%;
+    margin-right: 0%;
+}
+
+header {
+    background-color: black;
+    color: white;
+    padding: 15px;
+    height: 100%;
+    width: 100%;
+    margin-left: 0%;
+    margin-right: 0%;
+}
+
+main {
+    width: 100%;
+}
+
+.search-bar{
+    align-self: flex-end;
+}

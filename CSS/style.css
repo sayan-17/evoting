@@ -25,6 +25,12 @@ body {
     font-weight: 100;
 }
 
+.form h3 {
+    font-size: 30px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: 100;
+}
+
 .form p {
     font-size: 20;
     margin: 15px 0;
@@ -79,7 +85,7 @@ body {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-weight: 100;
     font-size: 22px;
-    color: rgb(185, 20, 20);
+    color: red;
 }
 
 header {
