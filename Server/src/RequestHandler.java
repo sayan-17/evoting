@@ -1,8 +1,6 @@
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import javafx.util.Pair;
-
 import java.io.*;
 import java.net.URI;
 import java.util.HashMap;
@@ -66,9 +64,16 @@ public class RequestHandler implements HttpHandler {
 	private String handlePostMethod(HttpExchange httpExchange) throws Exception {
 		InputStream inStream = httpExchange.getRequestBody();
 		Scanner scanner = new Scanner(inStream);
+		String type = scanner.nextLine();
 		String jsonData = scanner.nextLine();
-		String result = AdminData.addAdminDataToQueue(jsonData);
-		return result;
+		
+		switch (type){
+			case "signup" :
+				return AdminData.addAdminDataToQueue(jsonData);
+			case "save-campaign" :
+				return Campaign.storeCampaignData(jsonData);
+		}
+		return "not-stored";
 	}
 	
 	private String handleGetRequest(HttpExchange httpExchange) throws Exception {
@@ -76,25 +81,29 @@ public class RequestHandler implements HttpHandler {
 		String askedFor = getParameters.toString().substring(getParameters.toString().indexOf("/")+1,
 				getParameters.toString().indexOf("?"));
 		String query = getParameters.getQuery();
+		HashMap<String,String> queryParameters = parseQuery(query);
+		System.out.println(query + "\n" + askedFor);
 		switch (askedFor) {
 			case "admin" :
-				HashMap<String,String> emailAndPassword = parseQuery(query);
-				return DataStorageManager.getAdminData(emailAndPassword.get("email"), emailAndPassword.get("password"));
+				return DataStorageManager.getAdminEmail(queryParameters.get("email"), queryParameters.get("password"));
 			case "admin-forgot-password" :
-				HashMap<String,String> email = parseQuery(query);
-				String username = DataStorageManager.getUsernameForEmail(email.get("email"));
+				String username = DataStorageManager.getUsernameForEmail(queryParameters.get("email"));
 				if(username.equals("account doesn't exist"))
 					return "account doesn't exist";
 				AdminData.sendEmailWithVerificationCode(VerificationCodeGenerator.EMAIL_TYPE_WHEN_PASSWORD_FORGOT,
-						username, email.get("email"));
-				return email.get("email");
+						username, queryParameters.get("email"));
+				return queryParameters.get("email");
+			case "admin-campaign" :
+				return DataStorageManager.getAdminCampaigns(queryParameters.get("email"));
+			case "getCampaignsForStatus" :
+				return DataStorageManager.getAdminCampaignsForStatus(queryParameters.get("email"), queryParameters.get("status"));
 		}
 		return "not a valid query";
 	}
 	
 	private static HashMap<String,String> parseQuery(String query){
 		HashMap<String,String> queryDictionary = new HashMap<>();
-		int startIndex = 0, endIndex = 0, i = 0;
+		int startIndex = 0, endIndex;
 		String key, val;
 		while(startIndex < query.length() && (endIndex = query.indexOf("&", startIndex)) != -1){
 			key = query.substring(startIndex, query.indexOf("="));

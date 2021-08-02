@@ -49,6 +49,10 @@
   }
 }
 
+a{
+  cursor: pointer;
+}
+
 body {
   margin: 0;
   font-family: var(--bs-font-sans-serif);
@@ -11385,6 +11389,8 @@ body {
   margin-top: auto;
   margin-bottom: auto;
   width: 75%;
+  filter: drop-shadow(30px 10px 4px black);
+  filter: grayscale(50%);
 }
 
 .submit-button {
@@ -11401,4 +11407,32 @@ body {
 .submit-button:hover {
   background-color: black;
   color: white;
+}
+
+.error-message {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-weight: 100;
+  font-size: 16px;
+  color: red;
+}
+
+.empty-scene {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 50%;
+  align-items: center;
+}
+
+.empty-scene h3 {
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+.small-image {
+  max-height: 20%;
+  max-width: auto;
+  filter: grayscale(0%);
 }

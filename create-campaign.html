@@ -35,11 +35,7 @@
             </form>
             
             <!-- Navbar-->
-            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-                <li class="nav-item dropdown">
-                    <span class="initials">N</span>
-                </li>
-            </ul>
+            
         </nav>
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
@@ -47,11 +43,11 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link" href="admin-dashboard.html">
+                            <a class="nav-link" onclick="openPage('admin-dashboard.html')">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
-                            <a class="nav-link  active-selection" href="create-campaign.html">
+                            <a class="nav-link  active-selection">
                                 <div class="sb-nav-link-icon"><i class="fa fa-plus-circle" aria-hidden="true"></i></div>
                                 New Campaign
                             </a>
@@ -63,10 +59,10 @@
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="admin-all-campaigns.html">All Campaigns</a>
-                                    <a class="nav-link" href="admin-active-campaigns.html">Active Campaigns</a>
-                                    <a class="nav-link" href="admin-successful-campaigns.html">Successful Campaigns</a>
-                                    <a class="nav-link" href="admin-upcoming-campaigns.html">Upcoming Campaigns</a>
+                                    <a class="nav-link" onclick="openPage('admin-all-campaigns.html')">All Campaigns</a>
+                                    <a class="nav-link" onclick="openPage('admin-active-campaigns.html')">Active Campaigns</a>
+                                    <a class="nav-link" onclick="openPage('admin-successful-campaigns.html')">Successful Campaigns</a>
+                                    <a class="nav-link" onclick="openPage('admin-upcoming-campaigns.html')">Upcoming Campaigns</a>
                                 </nav>
                             </div>
                             
@@ -152,7 +148,6 @@
                                                 </div>
                                                 <br>
                                                 <div class="campaign-field-list" id="campaign-field-list-voter"></div>
-                                                <div class="error-message-voter"></div>
                                             </div>
                                         </div>
                                         <br/>
@@ -168,12 +163,12 @@
                                                 </div>
                                                 <br>
                                                 <div class="campaign-field-list" id="campaign-field-list-contestant"></div>
-                                                <div class="error-message-contestant"></div>
                                             </div>
                                         </div>
-                                        <div >
-                                            <button class="submit-button" onclick="submitCampaign()">Create New Campaign</button>
+                                        <div id="submit button section">
+                                            <button class="submit-button" id="create-campaign-submit-button" onclick="submitCampaign()">Create New Campaign</button><p id="submit-message"></p>
                                         </div>
+                                        <div class="error-message" id="create-campaign-error-message"></div>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -200,11 +195,7 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="assets/demo/chart-area-demo.js"></script>
-        <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-        <script src="js/datatables-simple-demo.js"></script>
     </body>
 </html>

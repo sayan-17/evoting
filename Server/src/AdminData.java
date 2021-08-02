@@ -119,7 +119,7 @@ public class AdminData {
 		String code = verifier.get(USER_DATA_FIELDS[INDEX_CODE]), result;
 		if (checkIfCodeInQueue(code, email)){
 			AdminData data = queue.get(email).getKey();
-			result = DataStorageManager.storeData(data);
+			result = DataStorageManager.storeAdminData(data);
 			queue.remove(email);
 			return (result.equals("stored"))?data.email : result;
 		}else
@@ -161,5 +161,9 @@ public class AdminData {
 	
 	public String toSQLString(){
 		return "\"" + admin_id + "\",\"" + username + "\",\"" + email + "\",\"" + password + "\"";
+	}
+	
+	public static String getAdminID(String email) throws Exception {
+		return DataStorageManager.getAdminId(email);
 	}
 }

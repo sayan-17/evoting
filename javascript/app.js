@@ -18,6 +18,7 @@ const FORGOT_PASSWORD_CODE = "forgot-password-code";
 const CHANGE_PASSWORD_PASSWORD = "change-password-password";
 const CHANGE_PASSWORD_RETYPE_PASSWORD = "change-password-retype-password";
 
+
 const ERROR_NO_SUCH_ACCOUNT = "account doesn't exist";
 const ERROR_INCORRECT_PASSWORD = "incorrect password"
 
@@ -105,9 +106,8 @@ function afterLoginResponse(response){
         updateHTMLElement(LOGIN_SHOW_ERROR, response);
     else{
         var query = new URLSearchParams();
-        query.append("key", response);
+        query.append("q", response);
         location.href = "admin-dashboard.html?" + query.toString();
-        document.getElementById("admin-body").innerHTML = response;
     }
 }
 
@@ -147,7 +147,7 @@ function makePostRequest(obj, email){
         }
     };
     xhttp.open("POST", "http://127.0.0.1:8000", true); 
-    xhttp.send(JSON.stringify(obj));
+    xhttp.send("signup\n" + JSON.stringify(obj));
 }
 
 function makePutRequest(query, obj, func){
@@ -178,8 +178,9 @@ function loadAdmin(response){
     if(response == "invalid code"){
         updateHTMLElement(VERIFICATION_SHOW_ERROR,"Invalid Code");
     }else{
-        console.log("response - " + response);
-        window.open("admin-dashboard.html" + "/admin?username=" + response, '_self');
+        var query = new URLSearchParams();
+        query.append("q", response);
+        location.href = "admin-dashboard.html?" + query.toString();
     }
 }
 

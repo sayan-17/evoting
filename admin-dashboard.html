@@ -34,11 +34,7 @@
             </form>
             
             <!-- Navbar-->
-            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-                <li class="nav-item dropdown">
-                    <span class="initials">S</span>
-                </li>
-            </ul>
+            
         </nav>
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
@@ -46,11 +42,11 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link active-selection" href="admin-dashboard.html">
+                            <a class="nav-link active-selection">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
-                            <a class="nav-link" href="create-campaign.html">
+                            <a class="nav-link" onclick="openPage('create-campaign.html')">
                                 <div class="sb-nav-link-icon"><i class="fa fa-plus-circle" aria-hidden="true"></i></div>
                                 New Campaign
                             </a>
@@ -62,10 +58,10 @@
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="admin-all-campaigns.html">All Campaigns</a>
-                                    <a class="nav-link" href="admin-active-campaigns.html">Active Campaigns</a>
-                                    <a class="nav-link" href="admin-successful-campaigns.html">Successful Campaigns</a>
-                                    <a class="nav-link" href="admin-upcoming-campaigns.html">Upcoming Campaigns</a>
+                                    <a class="nav-link" onclick="openPage('admin-all-campaigns.html')">All Campaigns</a>
+                                    <a class="nav-link" onclick="openPage('admin-active-campaigns.html')">Active Campaigns</a>
+                                    <a class="nav-link" onclick="openPage('admin-successful-campaigns.html')">Successful Campaigns</a>
+                                    <a class="nav-link" onclick="openPage('admin-upcoming-campaigns.html')">Upcoming Campaigns</a>
                                 </nav>
                             </div>
                             
@@ -106,7 +102,7 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4"><b>Sayan's Dashboard</b></h1>
+                        <h1 class="mt-4"><b><p id="dash-name"></p></b></h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active"><b>Overall</b></li>
                         </ol>
@@ -114,28 +110,28 @@
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
                                     <div class="card-header">Total Campaigns</div>
-                                    <div class="class-body" style="align-self: center;" id="admin-dashboard-total-campaigns"><h1>7</h1></div>
+                                    <div class="class-body" style="align-self: center;"><h1 id="admin-dashboard-total-campaigns">0</h1></div>
                                     
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
                                     <div class="card-header">Active Campaigns</div>
-                                    <div class="class-body" style="align-self: center;" id="admin-dashboard-active-campaigns"><h1>2</h1></div>
+                                    <div class="class-body" style="align-self: center;"><h1 id="admin-dashboard-active-campaigns">0</h1></div>
                                     
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
                                     <div class="card-header">Successful Campaigns</div>
-                                    <div class="class-body" style="align-self: center;" id="admin-dashboard-successful-campaigns"><h1>4</h1></div>
+                                    <div class="class-body" style="align-self: center;"><h1 id="admin-dashboard-successful-campaigns">0</h1></div>
                                     
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
                                     <div class="card-header">Upcoming Campaigns</div>
-                                    <div class="class-body" style="align-self: center;" id="admin-dashboard-upcoming-campaigns"><h1>1</h1></div>
+                                    <div class="class-body" style="align-self: center;"><h1 id="admin-dashboard-upcoming-campaigns">0</h1></div>
                                     
                                 </div>
                             </div>
@@ -148,71 +144,9 @@
                                 <p id="campaign-table-heading"><i class="fas fa-table me-1"></i> <b>All Campaigns</b></p>
                             </div>
                             <div class="card-body campaign-list" id="dashboard-campaign-list">
-                                <div class="card campaign">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <p class="col-sm-10">JIIT Campus Election</p>
-                                            <p class="col-sm-2">Active</p>
-                                        </div>
-                                        <a href="#">View Details</a>
-                                    </div>
-                                </div>
-                                <div class="card campaign">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <p class="col-sm-10">Pushp Vihar Sector-1 Municipal Elections</p>
-                                            <p class="col-sm-2">Upcoming</p>
-                                        </div>
-                                        <a href="#">View Details</a>
-                                    </div>
-                                </div>
-                                <div class="card campaign">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <p class="col-sm-10">New Green Field School Head boy selection</p>
-                                            <p class="col-sm-2">Successful</p>
-                                        </div>
-                                        <a href="#">View Details</a>
-                                    </div>
-                                </div>
-                                <div class="card campaign">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <p class="col-sm-10">Freedom Fighters Enclave President Election</p>
-                                            <p class="col-sm-2">Active</p>
-                                        </div>
-                                        <a href="#">View Details</a>
-                                    </div>
-                                </div>
-                                <div class="card campaign">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <p class="col-sm-10">SRCC student head election</p>
-                                            <p class="col-sm-2">Successful</p>
-                                        </div>
-                                        <a href="#">View Details</a>
-                                    </div>
-                                </div>
-                                <div class="card campaign">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <p class="col-sm-10">JIIT Teacher's club head election</p>
-                                            <p class="col-sm-2">Successful</p>
-                                        </div>
-                                        <a href="#">View Details</a>
-                                    </div>
-                                </div>
-                                <div class="card campaign">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <p class="col-sm-10">Hansraj College Student Elections</p>
-                                            <p class="col-sm-2">Successful</p>
-                                        </div>
-                                        <a href="#">View Details</a>
-                                    </div>
-                                </div>
                             </div>
-
+                            <div class="empty-scene" id="admin-dashboard-empty">  
+                            </div>
                         </div>
                     </div>
                 </main>
